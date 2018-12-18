@@ -18,7 +18,12 @@ const scrapePages = () => getTarget()
                                     $(".regularEntries tr").each((index, element) => {
                                         if (index > 0) {
                                             const job = {};
+                                            job["id"] = $(element).find("td a").first().attr("href").replace(/\//g, "");
                                             job["title"] = $(element).find("td a").first().text();
+                                            job["client"] = $(element).find("td a").last().text();
+                                            job["startDate"] = $(element).find("td").last().prev().text();
+                                            job["endDate"] = $(element).find("td").last().text();
+
                                             pageList[index - 1] = job;
                                         }
                                     });
