@@ -3,11 +3,11 @@ const { flattenArray } = require("./helper");
 
 const scrapePages = () => getTarget()
                             .then(($) => {
-                                const pages = $(".pagebox").length + 1;
+                                const pages = $(".pagebox").length;
                                 const promises = [];
-                                for(let i = 1; i <= pages; i++) {
-                                    const route = `/?page${i}`;
-                                    promises[i - 1] = getTarget(route);
+                                for(let i = 0; i <= pages; i++) {
+                                    const route = `/?page${i + 1}`;
+                                    promises[i] = getTarget(route);
                                 }
 
                                 return Promise.all(promises);
