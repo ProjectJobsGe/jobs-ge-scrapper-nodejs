@@ -1,12 +1,28 @@
 const { getTarget } = require("./index");
 
+// flattens array of arrays into one array
 const flattenArray = (arr) => {
     return arr.reduce(function (flat, toFlatten) {
       return flat.concat(Array.isArray(toFlatten) ? flattenArray(toFlatten) : toFlatten);
     }, []);
 }
 
-const getFilters = (filterName = "cat") => getTarget().then((scrapper) => {
+// input: cheerio object(scrapper), filter type, filter name(location or category)
+// output: function return array of cheerio objects(scrappers) correctly configured for set routes
+const getScrapperArr = ({scrapper, filter = "", filterName = ""}) => {
+  const pages = scrapper(".pagebox").length;
+  const filterStr = filter ? `&${filterName}=${filter}` : "";
+  const scrapperArr = [];
+  for(let i = 0; i <= pages; i++) {
+      const route = `/?page${i + 1}${filterStr}`;
+      scrapperArr[i] = getTarget(route);
+  }
+  return scrapperArr;
+}
+
+// input: filter name(location or cat)
+// output: returns array of filter values on page
+const getFilters = (filterName) => getTarget().then((scrapper) => {
   const filters = [];
   scrapper(`select[name=${filterName}] option`).each((index, element) => {
       if (index > 0) {
@@ -16,6 +32,7 @@ const getFilters = (filterName = "cat") => getTarget().then((scrapper) => {
   return filters; 
 })
 
+// parses page and returns array of jobs on one page
 const pageParser = (scrapper, selector = ".regularEntries tr") => {
   const pageList = [];
   scrapper(selector).each((index, element) => {
@@ -34,28 +51,14 @@ const pageParser = (scrapper, selector = ".regularEntries tr") => {
   return pageList;
 }
 
-const categoryParser = ({scrapper, category}) => {
+// parses given page via scrapper and returns array of objects containing Ids & filter names
+const filterParser = ({scrapper, filter, filterName}) => {
   const jobsList = []
   scrapper(".regularEntries tr").each((index, element) => {
     if (index > 0) {
       const job = {};
       job["id"] = scrapper(element).find("td a").first().attr("href").replace(/\//g, "");
-      job["category"] = category;
-
-      jobsList[index - 1] = job;
-    }
-  });
-
-  return jobsList;
-}
-
-const locationParser = ({scrapper, location}) => {
-  const jobsList = []
-  scrapper(".regularEntries tr").each((index, element) => {
-    if (index > 0) {
-      const job = {};
-      job["id"] = scrapper(element).find("td a").first().attr("href").replace(/\//g, "");
-      job["location"] = location;
+      job[filterName] = filter;
 
       jobsList[index - 1] = job;
     }
@@ -66,4 +69,4 @@ const locationParser = ({scrapper, location}) => {
 
 const parseArrays = (scrapperArr, parserFn) => scrapperArr.map((scrapper) => parserFn(scrapper));
 
-module.exports = { flattenArray, pageParser, categoryParser, locationParser, parseArrays, getFilters };
+module.exports = { flattenArray, pageParser, filterParser, parseArrays, getFilters, getScrapperArr };
