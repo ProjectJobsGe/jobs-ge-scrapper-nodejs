@@ -1,16 +1,20 @@
 // combine scrapped data
-const rp = require("request-promise");
+const rp = require("promise-request-retry");
 const cheerio = require("cheerio");
 const CONFIG = require("../config");
 
 const ROOT_URL = CONFIG.URL;
 
-// returns scrapper function
+// returns cheerio scrapper function, if request fails it will retry 5 times
 const getTarget = (route = "") => rp(
     {
-    uri: `${ROOT_URL}/${route}`, timeout: 1600000, simple: false
+        uri: `${ROOT_URL}/${route}`,
+        timeout: 0, 
+        simple: false,
+        retry: 5,
+        transform: (html) => cheerio.load(html),
+        headers: {'User-Agent':'request' }
     })
-    .then((html) => cheerio.load(html))
     .catch((error) => console.error(error));
 
 module.exports = { getTarget };

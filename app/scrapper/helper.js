@@ -71,6 +71,8 @@ const filterParser = ({scrapper, filter, filterName}) => {
   return jobsList;
 }
 
+// recieves array of individual cheerio scrapper objects and html parser function as input
+// outputs array of arrays per provided cheerio scrapper object 
 const parseArrays = (scrapperArr, parserFn) => scrapperArr.map((scrapper) => parserFn(scrapper));
 
 module.exports = { flattenArray, pageParser, filterParser, parseArrays, getFilters, getScrapperArr };

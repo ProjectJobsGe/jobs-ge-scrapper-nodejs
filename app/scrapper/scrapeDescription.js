@@ -1,5 +1,7 @@
 const {getTarget} = require("./index");
 
+// receives full list of jobs on site
+// iterates through list, gets id for every job and creates scrapper object with job description details
 const scrapeDescription = (list) => {
     const promises = list.map((job) => {
         const route = `${job.jobsGeId}/`;

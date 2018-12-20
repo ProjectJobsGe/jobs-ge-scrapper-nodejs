@@ -5,6 +5,10 @@ const scrapeDescription = require("./scrapper/scrapeDescription");
 const mapFiltersToJobs = require("./mapFiltersToJobs");
 const {getTarget} = require("./scrapper/index");
 
+// function scrapes and parses jobs & filters
+// then combines data into one array
+// then scrapes job descriptions according to jobsGeId and adds it to job object
+// finally jobs array is saved as json file in local temp folder
 const scrapeData = () => getTarget().then((scrapper) => {
     const jobListPromise = scrapePages(scrapper);
     const categoryListPromise = scrapeFilters("cat");
@@ -22,7 +26,7 @@ const scrapeData = () => getTarget().then((scrapper) => {
 .then((jobList) => scrapeDescription(jobList))
 .then((jobList) => {
     const json = JSON.stringify(jobList, null, 2);
-    fs.writeFile("./data/jobs.json", json);
+    fs.writeFileSync("./temp/jobs.json", json);
 })
 .catch((error) => console.error(error));
 
