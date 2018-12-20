@@ -6,6 +6,11 @@ const CONFIG = require("../config");
 const ROOT_URL = CONFIG.URL;
 
 // returns scrapper function
-const getTarget = (route = "") => rp(`${ROOT_URL}/${route}`).then((html) => cheerio.load(html));
+const getTarget = (route = "") => rp(
+    {
+    uri: `${ROOT_URL}/${route}`, timeout: 1600000
+    })
+    .then((html) => cheerio.load(html))
+    .catch((error) => console.error(error));
 
 module.exports = { getTarget };

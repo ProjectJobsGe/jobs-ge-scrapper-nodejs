@@ -5,7 +5,7 @@ const scrapeFilters = (filterName="cat") => {
                        return  getFilters(filterName)
                         .then((filters) => {
                           const filterPromises = filters.map((filter) => {
-                            const route = `?page=1&${filterName}=${filter}`;
+                            const route = `?page=1&${filterName}=${filter.val}`;
                             return getTarget(route)
                                 .then((scrapper) => {
                                 // check length of pages for current filter
@@ -14,12 +14,12 @@ const scrapeFilters = (filterName="cat") => {
 
                                 for (let i = 1; i <= pages; i++) {
 
-                                    const route = `/?page=${i}&${filterName}=${filter}`;
+                                    const route = `/?page=${i}&${filterName}=${filter.val}`;
                                     pagePromises[i-1] = getTarget(route)
                                                         .then((scrapper) => {
                                                             return filterParser({
                                                                             scrapper, 
-                                                                            filter, 
+                                                                            filter: filter.text, 
                                                                             filterName
                                                                         });
                                                                     });

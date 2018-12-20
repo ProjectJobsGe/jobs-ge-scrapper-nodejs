@@ -26,7 +26,11 @@ const getFilters = (filterName) => getTarget().then((scrapper) => {
   const filters = [];
   scrapper(`select[name=${filterName}] option`).each((index, element) => {
       if (index > 0) {
-          filters[index - 1] = scrapper(element).val();
+          const filter = {
+            val: scrapper(element).val(),
+            text: scrapper(element).text()
+          }
+          filters[index - 1] = filter;
       }
   });
   return filters; 
