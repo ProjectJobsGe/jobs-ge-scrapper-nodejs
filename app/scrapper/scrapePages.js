@@ -1,5 +1,4 @@
 const { flattenArray, pageParser, parseArrays, getScrapperArr } = require("./helper");
-const scrapeDescription = require("./scrapeDescription");
 
 const scrapePages = (scrapper) => {
                                 const scrapperArr = getScrapperArr({scrapper});
