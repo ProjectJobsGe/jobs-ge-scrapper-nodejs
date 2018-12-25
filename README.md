@@ -1,7 +1,19 @@
-# jobs-ge-scrapper-nodejs
+# H1 jobs-ge-scrapper-nodejs
 
-To run locally:
+# H3 To run locally:
 
-npm install or yarn add
+add following code to index.js:
 
-npm run start or yarn run start
+```const scrapeData = require("./app");
+
+console.log("App started!");
+
+scrapeData().then((jobs) => {
+    // console.log(jobs);
+});```
+
+and run following commands:
+
+`npm install or yarn add
+
+`npm run start or yarn run start
