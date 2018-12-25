@@ -1,6 +1,6 @@
 # H1 jobs-ge-scrapper-nodejs
 
-# H3 To run locally:
+To run locally:
 
 add following code to index.js:
 
@@ -10,7 +10,8 @@ console.log("App started!");
 
 scrapeData().then((jobs) => {
     // console.log(jobs);
-});```
+});
+```
 
 and run following commands:
 
