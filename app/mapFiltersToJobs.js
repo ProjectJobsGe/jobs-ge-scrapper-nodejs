@@ -1,28 +1,27 @@
-const mapFiltersToJobs = ({jobList, filters}) => {
-    return jobList.map((job) => {
-        filters.forEach((filterArr) => {
-            const filter = filterArr.find(filter => filter.id === job.id);
-            if (filter) {
-                for (let key in filter) {
-                    if (filter.hasOwnProperty(key) && key !== "id") {
-                        job[key] = filter[key];
-                    }
-                }
-            }
-        });
+const mapFiltersToJobs = ({ jobList, filters }) => jobList.map((job) => {
+  const result = { ...job };
+  filters.forEach((filterArr) => {
+    const currentFilter = filterArr.find(filter => filter.id === result.id);
+    if (currentFilter) {
+      Object.keys(currentFilter).forEach((key) => {
+        if (Object.prototype.hasOwnProperty.call(currentFilter, key) && key !== 'id') {
+          result[key] = currentFilter[key];
+        }
+      });
+    }
+  });
 
-        return {
-            jobsGeId: job.id,
-            title: job.title,
-            publicationDate: job.startDate,
-            expirationDate: job.endDate,
-            organization: job.client,
-            category: job.cat || "სხვა",
-            location: job.location || "ნებისმიერი",
-            adType: job.view || "სხვა",
-            text: job.description || ""
-        };
-    });
-}
+  return {
+    jobsGeId: result.id,
+    title: result.title,
+    publicationDate: result.startDate,
+    expirationDate: result.endDate,
+    organization: result.client,
+    category: result.cat || 'სხვა',
+    location: result.location || 'ნებისმიერი',
+    adType: result.view || 'სხვა',
+    text: result.description || '',
+  };
+});
 
 module.exports = mapFiltersToJobs;

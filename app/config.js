@@ -1,5 +1,5 @@
 const CONFIG = {
-    URL: "http://jobs.ge"
-}
+  URL: 'http://jobs.ge',
+};
 
 module.exports = CONFIG;
