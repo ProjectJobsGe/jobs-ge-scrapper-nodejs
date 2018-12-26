@@ -63,12 +63,15 @@ const filterParser = ({ scrapper, filter, filterName }) => {
   const jobsList = [];
   scrapper('.regularEntries tr').each((index, element) => {
     if (index > 0) {
-      const job = {};
-      job.id = scrapper(element).find('td a').first().attr('href')
-        .replace(/\//g, '');
-      job[filterName] = filter;
-
-      jobsList[index - 1] = job;
+      // if false there are 0 vacansies for given filter
+      if (scrapper(element).find('td a').first().attr('href')) {
+        const job = {};
+        job.id = scrapper(element).find('td a').first().attr('href')
+          .replace(/\//g, '');
+        job[filterName] = filter;
+  
+        jobsList[index - 1] = job;  
+      }      
     }
   });
 
