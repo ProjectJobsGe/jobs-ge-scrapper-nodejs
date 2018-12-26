@@ -1,4 +1,4 @@
-# H1 jobs-ge-scrapper-nodejs
+# jobs-ge-scrapper-nodejs
 
 To run locally:
 
@@ -15,6 +15,6 @@ scrapeData().then((jobs) => {
 
 and run following commands:
 
-`npm install or yarn add
+`npm install or yarn add`
 
-`npm run start or yarn run start
+`npm run start or yarn run start`
