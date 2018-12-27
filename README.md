@@ -18,3 +18,5 @@ and run following commands:
 `npm install or yarn add`
 
 `npm run start or yarn run start`
+
+# Travis
