@@ -12,4 +12,3 @@ scrapeData().then((jobs) => {
   console.log('Jobs scrapped!');
   sendJobsToAPI(jobs);
 });
-
