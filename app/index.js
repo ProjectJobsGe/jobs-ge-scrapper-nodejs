@@ -1,4 +1,3 @@
-const fs = require('fs');
 const scrapePages = require('./scrapper/scrapePages');
 const scrapeFilters = require('./scrapper/scrapeFilters');
 const scrapeDescription = require('./scrapper/scrapeDescription');
@@ -25,10 +24,6 @@ const scrapeData = () => getTarget().then((scrapper) => {
     filters: [categoryList, locationList, adTypeList],
   }))
   .then(jobList => scrapeDescription(jobList))
-  .then((jobList) => {
-    const json = JSON.stringify(jobList, null, 2);
-    fs.writeFileSync('./temp/jobs.json', json);
-  })
   .catch(error => console.error(error));
 
 module.exports = scrapeData;
