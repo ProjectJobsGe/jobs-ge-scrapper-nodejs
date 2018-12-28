@@ -1,6 +1,7 @@
 const mapFiltersToJobs = ({ jobList, filters }) => jobList.map((job) => {
   const result = { ...job };
-  filters.forEach((filterArr) => {
+  filters.forEach((filterArr, index) => {
+    if (!filterArr) throw new Error(`filterArr in mapFiltersToJobs at index ${index} is undefined!`);
     const currentFilter = filterArr.find(filter => filter.id === result.id);
     if (currentFilter) {
       Object.keys(currentFilter).forEach((key) => {
