@@ -69,9 +69,9 @@ const filterParser = ({ scrapper, filter, filterName }) => {
         job.id = scrapper(element).find('td a').first().attr('href')
           .replace(/\//g, '');
         job[filterName] = filter;
-  
-        jobsList[index - 1] = job;  
-      }      
+
+        jobsList[index - 1] = job;
+      }
     }
   });
 
